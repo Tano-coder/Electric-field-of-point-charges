@@ -12,21 +12,21 @@ stop = False
 count = 0
 
 while stop == False:
-    count+=1
+    count += 1
     
     print(f"Input parameters for point charge {count}:")
-    print("Charge: (+ or - value): ", end='')
+    print("Charge: (+ or - value): ", end = "")
     charge = float(input())
-    print("X-coordinate: ", end='')
+    print("X-coordinate (-20 <= x <= 20): ", end = "")
     x_cord = float(input())
-    print("Y-coordinate: ", end='')
+    print("Y-coordinate (-20 <= y <= 20): ", end = "")
     y_cord = float(input())
 
     store_Charges.add_Charges(charge, [x_cord, y_cord])
 
     valid = False
     while valid == False:
-        print("Would you like to create another point charge? (Y/N): ", end='')
+        print("Would you like to create another point charge? (Y/N): ", end = "")
         choice = input()
         if choice.upper() == "N":
             stop = True
@@ -38,7 +38,7 @@ while stop == False:
 
 #Initialize and calculate vectors
 c = 40
-max = c/2
+max = c // 2
 x = np.linspace(-max, max, c*2)
 y = np.linspace(-max, max, c*2)
 X, Y = np.meshgrid(x, y)
@@ -62,12 +62,22 @@ for i in range(len(x)):
 
 #Create the plot and plot the vectors as a streamplot
 fig, ax = plt.subplots()
-ax.set_aspect('equal')
-plt.xlabel("x")
-plt.ylabel("y")
-plt.title("Electric field lines of points charges")
+ax.set_aspect("equal")
+plt.xlabel("x (m)", fontweight = "bold")
+plt.ylabel("y (m)", fontweight = "bold")
+plt.title("Electric field lines of points charges", fontweight = "bold")
 ax.streamplot(X, Y, Ex, Ey, color = "grey", density = 2)
+
+#Plot each point charge
 for k in range(store_Charges.length):
-    plt.plot(store_Charges.charges[k].coordinates[0], store_Charges.charges[k].coordinates[1], "o", markersize = 10)
+    charge_x = store_Charges.charges[k].coordinates[0]
+    charge_y = store_Charges.charges[k].coordinates[1]
+    charge_val = store_Charges.charges[k].charge
+    if charge_val > 0:
+        charge_color = "red"
+    else:
+        charge_color = "blue"
+    plt.plot(charge_x, charge_y, "o", color=f"{charge_color}", markersize = 10)
+    plt.text(charge_x, charge_y+1, f"{charge_val} C", color = f"{charge_color}", fontsize = 12, ha = "center", va = "baseline", fontweight = "bold")
 
 plt.show()
