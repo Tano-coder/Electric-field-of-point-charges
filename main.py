@@ -51,6 +51,9 @@ for i in range(len(x)):
             y_dist = y[j] - store_Charges.charges[k].coordinates[1]
             r = np.sqrt(x_dist**2 + y_dist**2)
 
+            x_dir = 0
+            y_dir = 0
+
             if x_dist != 0:
                 x_dir = K * (store_Charges.charges[k].charge) / (r**2) * (x_dist / r)
 
