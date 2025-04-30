@@ -60,13 +60,14 @@ for i in range(len(x)):
             Ex[j, i] += x_dir
             Ey[j, i] += y_dir
 
+#Create the plot and plot the vectors as a streamplot
 fig, ax = plt.subplots()
-ax.streamplot(X, Y, Ex, Ey, color = "grey", density = 2)
-for k in range(store_Charges.length):
-    plt.plot(store_Charges.charges[k].coordinates[0], store_Charges.charges[k].coordinates[1], "o", markersize = 10)
-
 ax.set_aspect('equal')
 plt.xlabel("x")
 plt.ylabel("y")
 plt.title("Electric field lines of points charges")
+ax.streamplot(X, Y, Ex, Ey, color = "grey", density = 2)
+for k in range(store_Charges.length):
+    plt.plot(store_Charges.charges[k].coordinates[0], store_Charges.charges[k].coordinates[1], "o", markersize = 10)
+
 plt.show()
